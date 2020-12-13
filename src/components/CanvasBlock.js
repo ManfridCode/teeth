@@ -9,10 +9,13 @@ extend({ OrbitControls });
 const gum_contours_material = new THREE.LineBasicMaterial({color:0x00ff00});
 const bridges_material = new THREE.LineBasicMaterial({color:0x0000ff});
 const suspicous_material = new THREE.LineBasicMaterial({color:0xff0000});
+const modelMaterial = new THREE.MeshPhongMaterial( { color: 0xff5533, specular: 0x111111, shininess: 200, side:THREE.DoubleSide } );
 
 const CanvasBlock = ()=>{
 
     const json = useSelector(store=>store.json);
+    const geometry = useSelector(store=>store.geometry);
+    const controls = useRef();
 
     const SplinesJson = ({ data })=>{
 
@@ -48,22 +51,31 @@ const CanvasBlock = ()=>{
       )
     }
 
+    const Model = ({geometry})=>{
+      if(!geometry) return null;
+      const mesh = new THREE.Mesh(geometry,modelMaterial);
+      return (
+        <primitive object={mesh} />
+      )
+    }
+
     const CameraControls = () => {
       const {
         camera,
         gl: { domElement },
       } = useThree();
-      const controls = useRef();
-      if(controls.current) useFrame((state) => controls.current.update());
+      useFrame(state => controls.current.update());
       return <orbitControls ref={controls} args={[camera, domElement]} />;
     };
 
     return (
-        <Canvas id="webgl" shadowMap camera={{ position: [0, 0, 15] }}>
+        <Canvas id="webgl" shadowMap camera={{ position: [0, 0, 40] }}>
           <CameraControls />
           <ambientLight intensity={0.5} />
-          <spotLight intensity={0.6} position={[30, 30, 50]} angle={0.2} penumbra={1} castShadow />
+          <hemisphereLight color={0xFFFFFF} skyColor={0x443333} groundColor={0x111122} />
+          <directionalLight intensity={1.0} position={[100, 100, 100]} color={0xffffff} penumbra={1} castShadow />
           <SplinesJson data={json}/>
+          <Model geometry={geometry}/>
         </Canvas>
     )
 }

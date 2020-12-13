@@ -15,6 +15,9 @@ module.exports = {
   resolve: {
     fallback: { "os": require.resolve("os-browserify/browser") }
   },
+  optimization: {
+    minimize: false
+  },
   plugins: [
     new CleanWebpackPlugin({ cleanStaleWebpackAssets: false }),
     new HtmlWebpackPlugin({
@@ -23,7 +26,7 @@ module.exports = {
     }),
     new CopyPlugin({
       patterns: [
-        //{ from: "./src/assets", to: "assets" },
+        { from: "./src/assets", to: "assets" },
       ],
     }),
   ],
