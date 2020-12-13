@@ -1,0 +1,21 @@
+.load-buttons-block {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    background: #00000066;
+    border: 1px solid #000;
+}
+
+.load-buttons-block form {
+    display: flex;
+    flex-direction: column;
+}
+.load-buttons-block label {
+    margin: 7px 15px 5px;
+}
+.load-buttons-block input[type="file"] {
+    margin: 0px 15px 15px;
+}
+.load-buttons-block button[type="submit"] {
+    margin: 15px 15px;
+}
