@@ -23,7 +23,10 @@ const CanvasBlock = ()=>{
       const group = new THREE.Group();
 
       data.bridges.map((b,i)=>{
-        const curve = new THREE.SplineCurve(b.reduce((acc,p)=>{
+        //console.log('Bridge ========================');
+        const curve = new THREE.CatmullRomCurve3(b.reduce((acc,p)=>{
+          //console.log('point ',p);
+
             acc.push(new THREE.Vector3(p[0],p[1],p[2]));
             return acc;
         },[]));
@@ -35,7 +38,7 @@ const CanvasBlock = ()=>{
       });
 
       data.gum_contours.map((b,i)=>{
-        const curve = new THREE.SplineCurve(b.reduce((acc,p)=>{
+        const curve = new THREE.CatmullRomCurve3(b.reduce((acc,p)=>{
             acc.push(new THREE.Vector3(p[0],p[1],p[2]));
             return acc;
         },[]));
